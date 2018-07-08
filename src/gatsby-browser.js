@@ -1,5 +1,9 @@
 import createHistory from 'history/createBrowserHistory';
-import { pageTransitionEvent, pageTransitionTime } from './index.js';
+import {
+  pageTransitionEvent,
+  pageTransitionTime,
+  pageTransitionExists,
+} from './index.js';
 
 exports.onClientEntry = (_, { transitionTime }) => {
   window[pageTransitionTime] = transitionTime;
@@ -9,7 +13,9 @@ exports.onClientEntry = (_, { transitionTime }) => {
       detail: { pathname },
     });
     global.window.dispatchEvent(event);
-    setTimeout(() => callback(true), transitionTime);
+    window[pageTransitionExists]
+      ? setTimeout(() => callback(true), transitionTime)
+      : callback(true);
   };
 
   const history = createHistory({ getUserConfirmation });

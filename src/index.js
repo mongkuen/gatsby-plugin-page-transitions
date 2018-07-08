@@ -4,6 +4,7 @@ import Transition from 'react-transition-group/Transition';
 
 export const pageTransitionEvent = 'gatsby-plugin-page-transition::exit';
 export const pageTransitionTime = 'gatsby-plugin-page-transition::time';
+export const pageTransitionExists = 'gatsby-plugin-page-transition::exists';
 
 class PageTransition extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class PageTransition extends React.Component {
   componentDidMount() {
     this.setIn(true);
     global.window.addEventListener(pageTransitionEvent, this.listenerHandler);
+    window[pageTransitionExists] = true;
   }
 
   componentWillUnmount() {
@@ -23,6 +25,7 @@ class PageTransition extends React.Component {
       pageTransitionEvent,
       this.listenerHandler,
     );
+    window[pageTransitionExists] = false;
   }
 
   setIn(inProp) {
