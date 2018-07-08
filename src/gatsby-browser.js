@@ -6,7 +6,7 @@ import {
 } from './index.js';
 
 exports.onClientEntry = (_, { transitionTime }) => {
-  window[pageTransitionTime] = transitionTime;
+  window[pageTransitionTime] = transitionTime || 250;
 
   const getUserConfirmation = (pathname, callback) => {
     const event = new global.window.CustomEvent(pageTransitionEvent, {
