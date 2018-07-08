@@ -20,13 +20,18 @@
   ],
   "main": "index.js",
   "scripts": {
-    "dev": "onchange '**/*.js' 'src/**/*.jsx' -- prettier --write {{changed}}",
+    "dev": "concurrently \"yarn run prettier-watch\" \"yarn run build-watch\" --kill-others",
+    "build-watch": "onchange 'src/**/*.js' 'src/**/*.jsx' -- yarn run build",
+    "prettier-watch": "onchange 'src/**/*.js' 'src/**/*.jsx' -- prettier --write {{changed}}",
     "build": "babel src --out-dir .",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
-    "babel-runtime": "^6.26.0"
+    "babel-runtime": "^6.26.0",
+    "concurrently": "^3.6.0",
+    "onchange": "^4.0.0",
+    "prettier": "^1.13.7"
   }
 }
