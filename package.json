@@ -3,6 +3,7 @@
   "description": "Gatsby plugin to set page transitions",
   "license": "MIT",
   "author": "Mong-Kuen Sun <mongkuen.sun@gmail.com>",
+  "version": "1.0.0",
   "homepage": "https://github.com/mongkuen/gatsby-plugin-page-transitions",
   "bugs": {
     "url": "https://github.com/mongkuen/gatsby-plugin-page-transitions/issues"
@@ -28,10 +29,17 @@
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-runtime": "^6.26.0",
     "concurrently": "^3.6.0",
     "onchange": "^4.0.0",
     "prettier": "^1.13.7"
+  },
+  "dependencies": {
+    "history": "^4.7.2",
+    "prop-types": "^15.6.2",
+    "react-transition-group": "^2.4.0"
   }
 }
