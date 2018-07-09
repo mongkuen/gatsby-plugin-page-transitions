@@ -2,7 +2,7 @@
 
 Add page transitions to your Gatsby site.
 
-![gatsby-plugin-page-transition demo](https://github.com/mongkuen/gatsby-plugin-page-transitions/blob/master/transition.gif)
+![gatsby-plugin-page-transition demo](https://raw.githubusercontent.com/mongkuen/gatsby-plugin-page-transitions/master/transition.gif)
 
 Allows you to declaratively add page transitions, as well as specify unique transition strategies for any page on an individual basis.
 
