@@ -12,14 +12,18 @@ class PageTransition extends React.Component {
     super(props);
     this.setIn = this.setIn.bind(this);
     this.listenerHandler = this.listenerHandler.bind(this);
-    this.state = { in: false };
+    this.state = {
+      in: false,
+      transitionTime: null,
+    };
   }
 
   componentDidMount() {
     this.setIn(true);
     global.window.addEventListener(pageTransitionEvent, this.listenerHandler);
-    window[pageTransitionExists] = true;
-    window[componentTransitionTime] = this.props.transitionTime;
+    global.window[pageTransitionExists] = true;
+    global.window[componentTransitionTime] = this.props.transitionTime;
+    this.setState({ transitionTime: global.window[pageTransitionTime] });
   }
 
   componentWillUnmount() {
@@ -27,8 +31,8 @@ class PageTransition extends React.Component {
       pageTransitionEvent,
       this.listenerHandler,
     );
-    window[pageTransitionExists] = false;
-    window[componentTransitionTime] = undefined;
+    global.window[pageTransitionExists] = false;
+    global.window[componentTransitionTime] = undefined;
   }
 
   setIn(inProp) {
@@ -42,10 +46,8 @@ class PageTransition extends React.Component {
   }
 
   render() {
-    const transitionTime = window[pageTransitionTime];
-
     const defaultStyle = this.props.defaultStyle || {
-      transition: `opacity ${transitionTime}ms ease-in-out`,
+      transition: `opacity ${this.state.transitionTime}ms ease-in-out`,
       opacity: 0,
     };
 
@@ -55,7 +57,7 @@ class PageTransition extends React.Component {
     };
 
     return (
-      <Transition in={this.state.in} timeout={transitionTime}>
+      <Transition in={this.state.in} timeout={this.state.transitionTime}>
         {state => (
           <div
             style={{
