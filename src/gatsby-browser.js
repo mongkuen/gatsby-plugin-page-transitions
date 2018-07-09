@@ -3,6 +3,7 @@ import {
   pageTransitionEvent,
   pageTransitionTime,
   pageTransitionExists,
+  componentTransitionTime,
 } from './index.js';
 
 exports.onClientEntry = (_, { transitionTime }) => {
@@ -13,8 +14,9 @@ exports.onClientEntry = (_, { transitionTime }) => {
       detail: { pathname },
     });
     global.window.dispatchEvent(event);
+    const time = window[componentTransitionTime] || window[pageTransitionTime];
     window[pageTransitionExists]
-      ? setTimeout(() => callback(true), transitionTime)
+      ? setTimeout(() => callback(true), time)
       : callback(true);
   };
 
