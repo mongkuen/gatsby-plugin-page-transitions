@@ -2,6 +2,8 @@
 
 Add page transitions to your Gatsby site.
 
+![gatsby-plugin-page-transition demo](transition.gif)
+
 Allows you to declaratively add page transitions, as well as specify unique transition strategies for any page on an individual basis.
 
 ## Install

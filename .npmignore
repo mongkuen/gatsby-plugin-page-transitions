@@ -27,6 +27,7 @@ build/Release
 node_modules
 *.un~
 src
+*.gif
 flow-typed
 coverage
 decls
