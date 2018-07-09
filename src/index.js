@@ -76,6 +76,9 @@ PageTransition.propTypes = {
     PropTypes.arrayOf(PropTypes.shape({})),
     PropTypes.shape({}),
   ]).isRequired,
+  transitionTime: PropTypes.number,
+  defaultStyle: PropTypes.shape({}),
+  transitionStyles: PropTypes.shape({}),
 };
 
 export default PageTransition;
