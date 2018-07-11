@@ -2,19 +2,19 @@
 
 Add page transitions to your Gatsby site.
 
-![gatsby-plugin-page-transition demo](https://cdn.rawgit.com/mongkuen/gatsby-plugin-page-transitions/da195e50/transition.gif)
+![gatsby-plugin-page-transitions demo](https://cdn.rawgit.com/mongkuen/gatsby-plugin-page-transitions/da195e50/transition.gif)
 
 Allows you to declaratively add page transitions, as well as specify unique transition strategies for any page on an individual basis.
 
 ## Install
 
-1. Install the `gatsby-plugin-page-transition` plugin:
+1. Install the `gatsby-plugin-page-transitions` plugin:
 
-    `npm install --save gatsby-plugin-page-transition`
+    `npm install --save gatsby-plugin-page-transitions`
 
     or
 
-    `yarn add gatsby-plugin-page-transition`
+    `yarn add gatsby-plugin-page-transitions`
 
 ## Usage
 
@@ -25,7 +25,7 @@ Allows you to declaratively add page transitions, as well as specify unique tran
 
 module.exports = {
   plugins: [
-    'gatsby-plugin-page-transition'
+    'gatsby-plugin-page-transitions'
   ]
 }
 ```
@@ -61,7 +61,7 @@ There is a convenience option to let you modify the transition time on the defau
 module.exports = {
   plugins: [
     {
-      resolve: 'gatsby-plugin-page-transition',
+      resolve: 'gatsby-plugin-page-transitions',
       options: {
         transitionTime: 500
       }
