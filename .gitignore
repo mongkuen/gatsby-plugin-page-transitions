@@ -1,5 +1,7 @@
 /gatsby-browser.js
 /index.js
+*/.cache/
+*/public/
 
 # Logs
 logs

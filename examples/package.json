@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "gatsby": "^1.9.277",
+    "gatsby-plugin-page-transitions": "^1.0.6",
+    "react-transition-group": "^2.4.0"
+  }
+}

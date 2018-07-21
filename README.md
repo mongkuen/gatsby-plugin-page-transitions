@@ -6,6 +6,14 @@ Add page transitions to your Gatsby site.
 
 Allows you to declaratively add page transitions, as well as specify unique transition strategies for any page on an individual basis.
 
+Examples of usage can be found in the Github repository [here](https://github.com/mongkuen/gatsby-plugin-page-transitions/tree/master/examples).
+
+Examples cover:
+- Default Transition
+- Custom Transition
+- No Transition
+- Multiple Transitions
+
 ## Install
 
 1. Install the `gatsby-plugin-page-transitions` plugin:
@@ -119,3 +127,91 @@ const Index = () => (
 Notice that `500ms` string is specified as the transition length in the JS CSS object. The component needs to be passed `500` in the `transitionTime` prop, so the browser can wait for the animation to finish before navigation to the next path.
 
 You can use this method to specify unique transition strategies for each page individually, or wrap `PageTransition` yourself for a custom reusable transition.
+
+## Page Transition Event
+At a high level the plugin operates this way:
+1. User clicks a link to another page.
+2. Page change is caught, and navigation is paused for however long the `transitionTime` is specified.
+3. Page transition event `'gatsby-plugin-page-transition::exit'` is fired.
+4. Rendered components listening to the page transition event plays the transition.
+5. Pause is released, and browser navigates.
+
+If you require even more control, such as making different elements on the page transition in different ways, you'll need to listen for the page's transition event. Full implementation found in the examples [here](https://github.com/mongkuen/gatsby-plugin-page-transitions/tree/master/examples).
+
+If you are using `react-transition-group`'s `Transition` component as specified [here](http://reactcommunity.org/react-transition-group/transition), then your page might generically look something like this:
+
+```javascript
+import React from 'react'
+import PageTransition from 'gatsby-plugin-page-transitions'
+import Transition from 'react-transition-group/Transition'
+
+const pageTransitionEvent = 'gatsby-plugin-page-transition::exit';
+const defaultStyle = {
+  // Default transition styling
+}
+const transitionStyles = {
+  // Transition styling
+}
+
+class CustomComponent extends React.Component {
+  constructor (props) {
+    super(props)
+    this.listenHandler = this.listenHandler.bind(this)
+    this.state = {
+      in: false
+    }
+  }
+
+  componentDidMount () {
+    global.window.addEventListener(pageTransitionEvent, this.listenHandler)
+    this.setState({
+      in: true
+    })
+  }
+
+  listenHandler () {
+    this.setState({
+      in: false
+    })
+  }
+
+  componentWillUnmount () {
+    global.window.removeEventListener(pageTransitionEvent, this.listenHandler)
+  }
+
+  render () {
+    return (
+      <PageTransition transitionTime={500}>
+        <Transition in={this.state.in} timeout={500}>
+          {(state) => (
+            <div style={{
+              ...defaultStyle,
+              ...transitionStyles[state]
+            }}>
+              Elements
+            </div>
+          )}
+        </Transition>
+      </PageTransition>
+    )
+  }
+}
+```
+
+This component is doing several things:
+
+Per `react-transition-group`, there is local state `this.state.in` tracking if transitioning elements should be "in" or not
+
+1. `this.state.in` begins as `false`, with elements not "in".
+
+2. On mount, `this.state.in` is flipped to `true`, and elements are transitioned in.
+
+3. On mount, component begins listening to `gatsby-plugin-page-transition::exit`
+
+4. When user navigates away, global window `gatsby-plugin-page-transition::exit` event fires
+
+5. `<PageTransition transitionTime={500}>` component will handle event by pausing navigation, with an allotted `transitionTime` of 500ms
+
+6. Local component `listenHandler` sets `this.state.in` to `false`, and elements are transitioned out. Transitions should take 500ms or less, if they are to complete before page navigation.
+
+7. Transitions complete, page navigates, component cleans up listeners.
