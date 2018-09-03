@@ -4,9 +4,11 @@ import {
   pageTransitionTime,
   pageTransitionExists,
   componentTransitionTime,
+  CustomEventPolyfill
 } from './index.js';
 
 exports.onClientEntry = (_, { transitionTime }) => {
+  CustomEventPolyfill();
   global.window[pageTransitionTime] = transitionTime || 250;
 };
 
