@@ -24,4 +24,4 @@ const getUserConfirmation = (pathname, callback) => {
 
 const history = createHistory({ getUserConfirmation });
 history.block(location => location.pathname);
-exports.replaceHistory = () => history;
+exports.onRouteUpdate = () => history;
