@@ -1,5 +1,21 @@
 # gatsby-plugin-page-transitions
 
+## ** **NOT COMPATIABLE WITH GATSBY 2** **
+
+The API and the features this plugin provides is no longer possible with Gatsby 2. For simple page fade transitions the Gatsby team has provided an [adequate example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-page-transitions).
+
+With Gatsby 2, the plugin will **FAIL TO BUILD** because the `replaceHistory` API [has been removed](https://www.gatsbyjs.org/docs/migrating-from-v1-to-v2/#browser-api-replacehistory-was-removed). While the replacement [`onRouteUpdate`](https://www.gatsbyjs.org/docs/browser-apis/#onRouteUpdate) callback allows you to detect URL changes, it only does so when the URL has **ALREADY** been updated.
+
+This plugin needs to know **BEFORE** the URL changes, and relies on replacing the history and letting [`history.block()`](https://github.com/ReactTraining/history#blocking-transitions) give the page time to complete the exit transition for custom/multiple transitions before unmounting.
+
+Gatsby 2's removal of `replaceHistory` means that exit transitions will always be bugged, because the page isn't blocked and your component will disappear immediately as it unmounts.
+
+The official example works by using [`gatsby-plugin-layout`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-page-transitions/gatsby-config.js) to load a [layout component](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-page-transitions/src/layouts/index.js) with the [`TransitionGroup`](https://github.com/gatsbyjs/gatsby/blob/master/examples/using-page-transitions/src/components/transition.js) inside that never unmounts, letting the `TransitionGroup` handle exit transition timing. This should be adequate for most users, but renders this plugin redundant in the value it provides.
+
+<hr>
+
+## ** **ONLY APPLICABLE FOR GATSBY 1** **
+
 Add page transitions to your Gatsby site.
 
 ![gatsby-plugin-page-transitions demo](https://cdn.rawgit.com/mongkuen/gatsby-plugin-page-transitions/da195e50/transition.gif)
